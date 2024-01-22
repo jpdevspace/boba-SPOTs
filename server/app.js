@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import 'dotenv/config'
 
 import bobaRoutes from './routes/boba-routes.js';
 
