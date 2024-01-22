@@ -1,27 +1,16 @@
-import { useState } from "react";
-
 // Components
 import Button from "./Buttons";
 
-// Utils
-import locations from "../data/locations";
-
-const LocationFilters = () => {
-  const [location, setLocation] = useState(
-    locations[0]?.label ?? "Los Gatos, CA",
-  );
-
-  const handleClick = (location) => setLocation(location);
-
+const LocationFilters = ({ locations, userLocation, setUserLocation }) => {
   return (
     <div>
       <h2>Where are you located?</h2>
-      {locations.map((office) => (
+      {locations.map((location) => (
         <Button
-          key={office.address}
-          label={office.label}
-          isActive={location === office.label}
-          onClick={() => handleClick(office.label)}
+          key={location.address}
+          label={location.label}
+          isActive={userLocation === location.short}
+          onClick={() => setUserLocation(location.short)}
         />
       ))}
     </div>

@@ -1,20 +1,43 @@
 import { useEffect, useState } from "react";
-import mockData from "./data/mockData";
+// import mockData from "./data/mockData";
 
 // Components
 import LocationFilters from "./components/LocationFilters";
+import ShopItem from "./components/ShopItem";
+
+// Utils
+import locations from "./data/locations";
 
 const App = () => {
-  const [bobaLocations, setBobaLocations] = useState([]);
+  const [bobaShops, setBobaShops] = useState([]);
+  const [userLocation, setUserLocation] = useState(
+    locations[0]?.label ?? "Los Gatos, CA",
+  );
 
   useEffect(() => {
-    console.log("mmmm >>> ", mockData);
-    const { data } = mockData;
-    setBobaLocations(data);
+    fetch("http://localhost:8080/yelp/boba/lg")
+      .then((response) => response.json())
+      .then((resData) => setBobaShops(resData.data));
   }, []);
+
+  const handleSetUserLocation = (location) => {
+    setUserLocation(location);
+
+    fetch(`http://localhost:8080/yelp/boba/${location}`)
+      .then((response) => response.json())
+      .then((resData) => setBobaShops(resData.data));
+  };
+
   return (
     <>
-      <LocationFilters />
+      <LocationFilters
+        locations={locations}
+        userLocation={userLocation}
+        setUserLocation={handleSetUserLocation}
+      />
+      {bobaShops.map((shop) => {
+        return <ShopItem key={shop.id} data={shop} />;
+      })}
     </>
   );
 };

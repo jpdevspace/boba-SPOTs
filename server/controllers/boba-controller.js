@@ -1,15 +1,33 @@
 import yelp from 'yelp-fusion';
+import locations from "../util/locations.js";
 
 const yelpClient = yelp.client(process.env.YELP_API_KEY);
 
-const showBobaStores = async (req, res, next) => {
+const showBobaStoresByLocation = async (req, res, next) => {
   const yelpApiUrl = 'https://api.yelp.com/v3/businesses/search';
 
+  let location = '';
+
+  // Just a little bit of validation to restrict the backend to only call Yelp's API
+  // with the 3 locations set
+  switch (req.params.location) {
+    case 'la':
+      location = locations[1].label;
+      break;
+    case 'ny':
+      location = locations[2].label;
+      break;
+    default: // default to Los Gatos
+      location = locations[0].label;
+      break;
+  }
+
   const reqOpts = {
-    location: 'Los%20Angeles',
-    sort_by: 'best_match',
+    location,
+    term: 'boba',
+    sort_by: 'distance',
     radius: 10000,
-    limit: 5
+    limit: 20
   }
 
   try {
@@ -23,9 +41,9 @@ const showBobaStores = async (req, res, next) => {
       url: business.url, 
       rating: business.rating, 
       phone: business.phone, 
-      distance: business.distance
-      }
-    ));
+      distance: business.distance,
+      location: business.location
+    }));
 
     res.status(200).json({ data });
   } catch (e) {
@@ -35,4 +53,4 @@ const showBobaStores = async (req, res, next) => {
   }
 }
 
-export default { showBobaStores };
+export default { showBobaStoresByLocation };
