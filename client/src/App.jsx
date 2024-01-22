@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import mockData from "./data/mockData";
+// import mockData from "./data/mockData";
 
 // Components
 import LocationFilters from "./components/LocationFilters";
