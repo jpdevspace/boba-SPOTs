@@ -12,9 +12,7 @@ import SortBy from "./components/SortBy";
 const App = () => {
   const [bobaShops, setBobaShops] = useState([]);
   const [sortBy, setSortBy] = useState("distance");
-  const [userLocation, setUserLocation] = useState(
-    locations[0]?.label ?? "Los Gatos, CA",
-  );
+  const [userLocation, setUserLocation] = useState("lg");
 
   useEffect(() => {
     fetch("http://localhost:8080/yelp/boba/lg")
@@ -24,6 +22,7 @@ const App = () => {
 
   const handleSetUserLocation = (location) => {
     setUserLocation(location);
+    setSortBy("distance");
 
     fetch(`http://localhost:8080/yelp/boba/${location}`)
       .then((response) => response.json())
@@ -49,12 +48,14 @@ const App = () => {
 
   return (
     <>
-      <LocationFilters
-        locations={locations}
-        userLocation={userLocation}
-        setUserLocation={handleSetUserLocation}
-      />
-      <SortBy sortBy={sortBy} setSortBy={handleSetSortBy} />
+      <div className="shop-filters-container">
+        <LocationFilters
+          locations={locations}
+          userLocation={userLocation}
+          setUserLocation={handleSetUserLocation}
+        />
+        <SortBy sortBy={sortBy} setSortBy={handleSetSortBy} />
+      </div>
       {bobaShops.map((shop) => {
         return <ShopItem key={shop.id} data={shop} />;
       })}

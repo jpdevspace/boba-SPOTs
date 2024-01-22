@@ -12,13 +12,14 @@ const showBobaStoresByLocation = async (req, res, next) => {
   // with the 3 locations set
   switch (req.params.location) {
     case 'la':
-      location = locations[1].label;
+
+      location = `${locations[1].address}, ${locations[1].city}, ${locations[1].state}`;
       break;
     case 'ny':
-      location = locations[2].label;
+      location = `${locations[2].address}, ${locations[2].city}, ${locations[2].state}`;
       break;
     default: // default to Los Gatos
-      location = locations[0].label;
+      location = `${locations[0].address}, ${locations[0].city}, ${locations[0].state}`;
       break;
   }
 

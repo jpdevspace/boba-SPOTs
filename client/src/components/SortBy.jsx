@@ -2,7 +2,7 @@ import Button from "./Buttons";
 
 const SortBy = ({ sortBy, setSortBy }) => {
   return (
-    <div>
+    <div className="shop-sort">
       <h2>Sort By</h2>
       <Button
         key="rating"

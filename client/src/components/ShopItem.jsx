@@ -1,5 +1,4 @@
 const ShopItem = ({ data }) => {
-  console.log("Data >>> ", data);
   return (
     <div className="shop-item">
       <div className="shop-img-container">

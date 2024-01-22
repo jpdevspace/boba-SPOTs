@@ -3,6 +3,8 @@
 :root {
   --defaultBlackContent: #444;
   --defaultBlackTitle: #222;
+  --lightBlueBoba: #8383f4;
+  --darkBlueBoba: #3f3ff5;
 }
 
 * {
@@ -10,23 +12,55 @@
 }
 
 html {
-  font-family: "Bricolage Grotesque", sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1.5;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  height: 100%;
   color: var(--defaultBlackContent);
-  width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
   padding: 1em;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--lightBlueBoba);
+}
+
+button {
+  border: 0;
+  padding: 0.2em 0.5em;
+  border-radius: 5px;
+  margin: 0.2em 0.2em;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 7px 14px rgba(50, 50, 93, 0.1),
+    0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.button-active {
+  background-color: var(--lightBlueBoba);
+}
+
+.shop-filters-container {
+  display: flex;
+  color: var(--lightBlueBoba);
 }
 
 .shop-item {
   display: flex;
   justify-content: space-between;
+  border: #fff;
+  box-shadow: 1px 1px 15px 1px #ecebeb;
+  border-radius: 5px;
+  margin: 2em;
 }
 
 .shop-img-container {
@@ -43,4 +77,10 @@ html {
 
 .shop-img {
   width: 8em;
+}
+
+.shop-name {
+  color: var(--defaultBlackTitle);
+  font-size: 24px;
+  font-weight: bold;
 }

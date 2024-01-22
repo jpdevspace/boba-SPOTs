@@ -3,7 +3,7 @@ import Button from "./Buttons";
 
 const LocationFilters = ({ locations, userLocation, setUserLocation }) => {
   return (
-    <div>
+    <div className="shop-locations-filter">
       <h2>Where are you located?</h2>
       {locations.map((location) => (
         <Button
