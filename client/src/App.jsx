@@ -7,9 +7,11 @@ import ShopItem from "./components/ShopItem";
 
 // Utils
 import locations from "./data/locations";
+import SortBy from "./components/SortBy";
 
 const App = () => {
   const [bobaShops, setBobaShops] = useState([]);
+  const [sortBy, setSortBy] = useState("distance");
   const [userLocation, setUserLocation] = useState(
     locations[0]?.label ?? "Los Gatos, CA",
   );
@@ -28,6 +30,23 @@ const App = () => {
       .then((resData) => setBobaShops(resData.data));
   };
 
+  const handleSetSortBy = (sortBy) => {
+    setSortBy(sortBy);
+    let sortedBobas = [];
+
+    if (sortBy === "distance") {
+      sortedBobas = bobaShops.toSorted(
+        (shopA, shopB) => shopA.distance - shopB.distance,
+      );
+    } else if (sortBy === "rating") {
+      sortedBobas = bobaShops.toSorted(
+        (shopA, shopB) => shopB.rating - shopA.rating,
+      );
+    }
+
+    setBobaShops(sortedBobas);
+  };
+
   return (
     <>
       <LocationFilters
@@ -35,6 +54,7 @@ const App = () => {
         userLocation={userLocation}
         setUserLocation={handleSetUserLocation}
       />
+      <SortBy sortBy={sortBy} setSortBy={handleSetSortBy} />
       {bobaShops.map((shop) => {
         return <ShopItem key={shop.id} data={shop} />;
       })}

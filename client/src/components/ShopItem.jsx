@@ -2,10 +2,10 @@ const ShopItem = ({ data }) => {
   console.log("Data >>> ", data);
   return (
     <div className="shop-item">
-      <div>
+      <div className="shop-img-container">
         <img className="shop-img" src={data.image_url ?? ""} alt="Boba Shop" />
       </div>
-      <div>
+      <div className="shop-content">
         <p>{data.is_closed ? "Sorry store is closed" : "Store is open!"}</p>
         <p className="shop-name">{data.name}</p>
         <p>⭐️ {data.rating}</p>
