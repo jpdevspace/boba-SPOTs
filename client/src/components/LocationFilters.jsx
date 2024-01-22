@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 // Components
 import Button from "./Buttons";
 
@@ -5,9 +7,11 @@ import Button from "./Buttons";
 import locations from "../data/locations";
 
 const LocationFilters = () => {
-  const handleClick = (location) => {
-    console.log("Office > ", location);
-  };
+  const [location, setLocation] = useState(
+    locations[0]?.label ?? "Los Gatos, CA",
+  );
+
+  const handleClick = (location) => setLocation(location);
 
   return (
     <div>
@@ -15,8 +19,9 @@ const LocationFilters = () => {
       {locations.map((office) => (
         <Button
           key={office.address}
-          label={`${office.city}, ${office.state}`}
-          fn={() => handleClick(office.city)}
+          label={office.label}
+          isActive={location === office.label}
+          onClick={() => handleClick(office.label)}
         />
       ))}
     </div>
