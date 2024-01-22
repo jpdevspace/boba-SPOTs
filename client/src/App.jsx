@@ -1,5 +1,11 @@
+import LocationFilters from "./components/LocationFilters";
+
 const App = () => {
-  return <h1>Boba Spot</h1>;
+  return (
+    <>
+      <LocationFilters />
+    </>
+  );
 };
 
 export default App;
