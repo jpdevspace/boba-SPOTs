@@ -1,5 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
+
+import bobaRoutes from './routes/boba-routes.js';
 
 const PORT = process.env.PORT || 8080;
 
@@ -7,17 +9,24 @@ const app = express();
 
 app.use(bodyParser.json());
 
+// CORS
 app.use((req, res, next) => {
-  const error = new HttpError('Could not find this route.', 404);
-  throw error;
+  res.setHeader('Access-Control-Allow-Origin', '*'); // allow all domains
+  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  next();
 });
 
-app.use((error, req, res, next) => {
-  if (res.headerSent) {
-    return next(error);
+// Routes
+app.use('/yelp/boba', bobaRoutes);
+
+// 404
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
   }
-  res.status(error.code || 500)
-  res.json({message: error.message || 'An unknown error occurred!'});
+  res.status(404).json({ message: '404 - Not Found' });
 });
 
 app.listen(PORT, () => {
