@@ -2,41 +2,57 @@ import { useEffect, useState } from "react";
 // import mockData from "./data/mockData";
 
 // Components
+import Error from "./components/Error";
 import LocationFilters from "./components/LocationFilters";
-import ShopItem from "./components/ShopItem";
 import Loading from "./components/Loading";
+import ShopItem from "./components/ShopItem";
+import SortBy from "./components/SortBy";
 
 // Utils
 import locations from "./data/locations";
-import SortBy from "./components/SortBy";
+import fetchData from "./utils/http";
 
 const App = () => {
   const [bobaShops, setBobaShops] = useState([]);
   const [sortBy, setSortBy] = useState("distance");
   const [userLocation, setUserLocation] = useState("lg");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch("http://localhost:8080/yelp/boba/lg")
-      .then((response) => response.json())
-      .then((resData) => {
-        setBobaShops(resData.data);
-        setIsLoading(false);
-      });
+    async function fetchInitialData() {
+      setIsLoading(true);
+
+      try {
+        const shops = await fetchData("lg");
+        setBobaShops(shops);
+      } catch (e) {
+        setError({
+          message: e.message || "Error while fetching the initial data",
+        });
+      }
+
+      setIsLoading(false);
+    }
+
+    fetchInitialData();
   }, []);
 
-  const handleSetUserLocation = (location) => {
+  const handleSetUserLocation = async (location) => {
     setIsLoading(true);
     setUserLocation(location);
     setSortBy("distance");
 
-    fetch(`http://localhost:8080/yelp/boba/${location}`)
-      .then((response) => response.json())
-      .then((resData) => {
-        setBobaShops(resData.data);
-        setIsLoading(false);
+    try {
+      const shops = await fetchData(location);
+      setBobaShops(shops);
+    } catch (e) {
+      setError({
+        message: e.message || "Error while fetching your bobas",
       });
+    }
+
+    setIsLoading(false);
   };
 
   const handleSetSortBy = (sortBy) => {
@@ -56,10 +72,9 @@ const App = () => {
     setBobaShops(sortedBobas);
   };
 
-  if (isLoading) {
-    return <Loading />;
+  if (error) {
+    return <Error message={error.message} />;
   }
-
   return (
     <>
       <div className="shop-filters-container">
@@ -70,9 +85,13 @@ const App = () => {
         />
         <SortBy sortBy={sortBy} setSortBy={handleSetSortBy} />
       </div>
-      {bobaShops.map((shop) => {
-        return <ShopItem key={shop.id} data={shop} />;
-      })}
+      {isLoading && <Loading />}
+      {!isLoading && bobaShops.length === 0 && (
+        <p>Sorry, no stores near that location!</p>
+      )}
+      {!isLoading &&
+        bobaShops.length > 0 &&
+        bobaShops.map((shop) => <ShopItem key={shop.id} data={shop} />)}
     </>
   );
 };

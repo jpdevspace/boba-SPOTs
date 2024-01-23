@@ -5,6 +5,7 @@
   --defaultBlackTitle: #222;
   --lightBlueBoba: #8383f4;
   --darkBlueBoba: #3f3ff5;
+  --errorRed: #f9bbbb;
 }
 
 * {
@@ -101,4 +102,13 @@ button:hover {
   to {
     transform: rotate(360deg);
   }
+}
+
+.error {
+  background-color: var(--errorRed);
+  padding: 0.2em 1em 1em 1em;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  color: var(--defaultBlackTitle);
 }
