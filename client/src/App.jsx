@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import mockData from "./data/mockData";
 
 // Components
 import Error from "./components/Error";
@@ -75,6 +74,7 @@ const App = () => {
   if (error) {
     return <Error message={error.message} />;
   }
+
   return (
     <>
       <div className="shop-filters-container">

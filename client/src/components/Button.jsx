@@ -2,8 +2,8 @@ const Button = ({ label, isActive, ...props }) => {
   const classNames = `button ${isActive ? "button-active" : ""}`;
 
   return (
-    <button className={classNames} {...props}>
-      {label}
+    <button data-testid="button" className={classNames} {...props}>
+      {label ?? "Label"}
     </button>
   );
 };

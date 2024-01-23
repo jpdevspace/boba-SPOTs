@@ -12,7 +12,6 @@ const showBobaStoresByLocation = async (req, res, next) => {
   // with the 3 locations set
   switch (req.params.location) {
     case 'la':
-
       location = `${locations[1].address}, ${locations[1].city}, ${locations[1].state}`;
       break;
     case 'ny':
@@ -49,7 +48,7 @@ const showBobaStoresByLocation = async (req, res, next) => {
     res.status(200).json({ data });
   } catch (e) {
     res.status(400).json({
-      message: 'Ooops, something went wrong...',
+      message: 'Ooops, something went wrong connecting with Yelp\'s API',
     })
   }
 }

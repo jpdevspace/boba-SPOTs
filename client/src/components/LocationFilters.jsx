@@ -1,5 +1,5 @@
 // Components
-import Button from "./Buttons";
+import Button from "./Button";
 
 const LocationFilters = ({ locations, userLocation, setUserLocation }) => {
   return (
