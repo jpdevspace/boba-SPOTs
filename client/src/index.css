@@ -21,6 +21,12 @@ html {
   padding: 1em;
 }
 
+#hero-img {
+  display: block;
+  width: 32em;
+  margin: 0 auto;
+}
+
 h1 {
   font-size: 48px;
   font-weight: bold;
